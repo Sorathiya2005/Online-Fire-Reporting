@@ -1,0 +1,38 @@
+.navbar-brand{
+    color : white !important;
+    font-weight:bold
+}
+
+.bg-custom {
+	background: linear-gradient(45deg, #5f304e 32%, #573170 100%);
+}
+
+
+.nav-link{
+    color : white !important;
+}
+
+.nav-link:hover{
+    background-color : black !important;
+    border-radius : 15px;
+}
+
+.frontimage{
+    width:100%;
+}
+
+#login{
+    opacity : 0.9;
+}
+
+.page-title{
+color : red;
+    font-size: 2em;/*1em = 16px*/
+    font-weight: 600;
+    padding: .5em 1em;/*top bottom se 5em and left right se 1 em*/
+    box-shadow: 0px 0px 2px #b0b0b0;
+    text-transform: uppercase;
+    width: 40%;
+    margin: 0 auto;
+    border: 5px solid #5f304e;
+}
