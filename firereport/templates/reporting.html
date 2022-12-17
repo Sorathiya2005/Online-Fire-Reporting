@@ -1,0 +1,71 @@
+{% include 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporting - Online Fire Report Management System</title>
+
+</head>
+
+<body style="background-color: #f7f7f7;">
+<img src="{% static 'images/fire2.jpg' %}" style="width:100%; height:350px;">
+
+<div class="container mt-5">
+    <h3 class="page-title text-center">Online Fire Report</h3>
+    <div class="card mt-3" style="border: 5px solid #573170;">
+        <div class="card-body">
+            <h2 class="card-title text-center" style="text-transform: uppercase; color:#573170;">Apply Now</h2>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="FullName" class="form-control" placeholder="Enter Name" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="MobileNumber" class="form-control" placeholder="Enter Mobile No." maxlength="10"
+                               required>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Location</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="Location" class="form-control" placeholder="Enter Your Location" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Message</label>
+                    <div class="col-sm-10">
+                        <textarea name="Message" class="form-control" placeholder="Message...." required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% if error == "no" %}
+<script>
+        alert('Reporting Successfull');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+        alert('Something went wrong, Try Again...');
+</script>
+{% endif %}
+
+<br><br><br>
+</body>
+</html>
+
+{% include 'footer.html' %}

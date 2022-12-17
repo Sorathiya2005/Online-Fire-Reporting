@@ -1,0 +1,46 @@
+{% load static %}
+
+<title>Online Fire Reporting System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+
+<nav class="navbar navbar-expand-md bg-custom navbar-dark">
+  <!-- Brand -->
+  <img src="{% static 'images/fire.jpg' %}" class="img-thumbnail" width="100" height="50">
+  <a class="navbar-brand pl-2" href="#"> Online Fire Reporting System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav pl-5 ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'reporting' %}"><i class="fas fa-file"></i> Reporting</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'viewStatus' %}"><i class="fas fa-eye"></i> View Status</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin_login' %}"><i class="fas fa-sign-in-alt"></i> Admin Login</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,41 @@
+{% include 'navbar.html' %}
+{% load static %}
+<body style="background-color: #dbe2da;">
+<img src="{% static 'images/fire4.jpg' %}" style="width:100%; height:350px;">
+<hr>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <h5 class="card-title text-center text-danger" style="font-family:'Monotype corsiva'; font-size:30px">Admin Login</h5>
+                <div class="mb-3">
+                    <label>Username</label>
+                    <input type="text" name="uname" class="form-control" placeholder="Enter Username" required>
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Logged In Successfully');
+    window.location=('{% url 'dashboard' %}');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Invalid Credentials, Please try again');
+</script>
+{% endif %}
+
+</body>
+
+{% include 'footer.html' %}

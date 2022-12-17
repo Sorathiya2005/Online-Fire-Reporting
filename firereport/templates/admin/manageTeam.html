@@ -1,0 +1,76 @@
+{% extends 'adminNavbar.html' %}
+{% block main %}
+{% load static %}
+
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Manage Team Details</h1>
+                </div>
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Fire Control Teams</li>
+                        <li class="breadcrumb-item active">Manage Team</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Team Details</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Team Name</th>
+                                <th>Team Leader Name</th>
+                                <th>Team Leader Contact No.</th>
+                                <th>Team Members</th>
+                                <th>Registration Date</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for i in teams %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.teamName}}</td>
+                                <td>{{i.teamLeaderName}}</td>
+                                <td>{{i.teamLeadMobno}}</td>
+                                <td>{{i.teamMembers}}</td>
+                                <td>{{i.postingDate}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="{% url 'editTeam' i.id %}"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-danger" onclick="return confirm('Are you sure to Delete ?')" href="{% url 'deleteTeam' i.id %}"><i
+                                            class="fa fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

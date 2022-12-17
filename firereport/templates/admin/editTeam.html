@@ -1,0 +1,84 @@
+{% extends 'adminNavbar.html' %}
+{% block main %}
+{% load static %}
+
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Update Team</h1>
+                </div>
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Fire Control Teams</li>
+                        <li class="breadcrumb-item active">Manage Team</li>
+                        <li class="breadcrumb-item active">Edit Team</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Team</h3>
+                    </div>
+
+                    <!-- form start -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Team Name</label>
+                                <input type="text" name="teamName" class="form-control" value="{{teams.teamName}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Team Leader Name</label>
+                                <input type="text" name="teamLeaderName" class="form-control" value="{{teams.teamLeaderName}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Team Lead Contact Number</label>
+                                <input type="text" name="teamLeadMobno" class="form-control" maxlength="10" value="{{teams.teamLeadMobno}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Team Member (Seprated by Comma)</label>
+                                <input type="text" name="teamMembers" class="form-control" value="{{teams.teamMembers}}">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% if error == "no" %}
+<script>
+        alert('Team has been Update.');
+        window.location=('{% url 'manageTeam' %}');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+        alert('Something went wrong, Try Again...');
+</script>
+{% endif %}
+
+{% endblock %}

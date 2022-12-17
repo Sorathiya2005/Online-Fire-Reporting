@@ -1,0 +1,104 @@
+{% include 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Status Details</title>
+</head>
+<body>
+<img src="{% static 'images/fire3.jpg' %}" style="width:100%; height:350px;">
+<br>
+<div class="container mt-3">
+    <h5 class="page-title text-center">View Status Details</h5>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <tr>
+                    <th colspan="4" class="text-center text-danger">Personal Information</th>
+                </tr>
+
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{firereport.FullName}}</td>
+
+                    <th>Mobile Number</th>
+                    <td>{{firereport.MobileNumber}}</td>
+                </tr>
+
+                <tr>
+                    <th>Location</th>
+                    <td>{{firereport.Location}}</td>
+
+                    <th>Reporting Time</th>
+                    <td>{{firereport.Postingdate}}</td>
+                </tr>
+
+                <tr>
+                    <th>Message</th>
+                    <td colspan="3">{{firereport.Message}}</td>
+                </tr>
+            </table>
+
+            <table id="example1" class="table table-bordered table-striped">
+                <tr>
+                    <th colspan="4" class="text-center text-danger">Assigned Details</th>
+                </tr>
+                {% if firereport.AssignTo %}
+                <tr>
+                    <th>Team Name</th>
+                    <td>{{firereport.AssignTo.teamName}}</td>
+
+                    <th>Team Leader Name</th>
+                    <td>{{firereport.AssignTo.teamLeaderName}}</td>
+                </tr>
+
+                <tr>
+                    <th>Team Leader Mobile No.</th>
+                    <td>{{firereport.AssignTo.teamLeadMobno}}</td>
+
+                    <th>Assigned Time</th>
+                    <td>{{firereport.AssignedTime}}</td>
+                </tr>
+
+                <tr>
+                    <th>Team Members</th>
+                    <td colspan="3">{{firereport.AssignTo.teamMembers}}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th><h4 align="center" style="color:green"> Not Updated Yet </h4></th>
+                </tr>
+                {% endif %}
+            </table>
+
+            {% if reportcount != 0 %}
+            <table id="example1" class="table table-bordered table-striped">
+                <tr>
+                    <th colspan="4" class="text-center text-danger">Request Track History</th>
+                </tr>
+
+                {% for i in report1 %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.remark}}</td>
+                    <td>{{i.status}}</td>
+                    <td>{{i.postingDate}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+
+            {% if reportcount == 0 %}
+            <h4 align="center" style="color:red"> No Tracking history found </h4>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<br><br><br>
+</body>
+</html>
+
+{% include 'footer.html' %}

@@ -1,0 +1,262 @@
+{% extends 'adminNavbar.html' %}
+{% block main %}
+{% load static %}
+
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">View Request Details</h1>
+                </div>
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Request Details</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">View Request Details</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <tr>
+                                        <th style="text-align: center; color: red;" colspan="2">Personal Information (Reported by)
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <td>{{firereport.FullName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile Number</th>
+                                        <td>{{firereport.MobileNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Location</th>
+                                        <td>{{firereport.Location}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Message</th>
+                                        <td>{{firereport.Message}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Reporting Time</th>
+                                        <td>{{firereport.Postingdate}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            {% if firereport.AssignTo == null %}
+                            <h4 align="center" style="color:red;"> Not Assigned Yet </h4>
+                            {% else %}
+                            <div class="col-12">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <tr>
+                                        <th style="text-align: center; color: red;" colspan="2">Assigned Details</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Team Name</th>
+                                        <td>{{firereport.AssignTo.teamName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Team Leader Name</th>
+                                        <td>{{firereport.AssignTo.teamLeaderName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TL Mobile No.</th>
+                                        <td>{{firereport.AssignTo.teamLeadMobno}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Team Members</th>
+                                        <td>{{firereport.AssignTo.teamMembers}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Assigned Time</th>
+                                        <td>{{firereport.AssignedTime}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+                        {% if reportcount != 0 %}
+                        <table id="example1" class="table table-bordered table-striped">
+                            <tr align="center" style="color: red;">
+                                <th colspan="4">Request Track History</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Remark</th>
+                                <th>Status</th>
+                                <th>Remark Date</th>
+                            </tr>
+
+                            {% for i in report1 %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.remark}}</td>
+                                <td>{{i.status}}</td>
+                                <td>{{i.postingDate}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% endif %}
+
+                        {% if reportcount == 0 %}
+                        <h4 align="center" style="color:red"> No Tracking history found </h4>
+                        {% endif %}
+                        <br>
+
+                        {% if not firereport.AssignTo %}
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#myModal">Assign To
+                            </button>
+                        </div>
+                        {% elif firereport.Status != 'Request Completed' %}
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#takeaction">Take Action
+                        </button>
+                        {% endif %}
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">AssignTo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <table width="100%">
+                                                <tr>
+                                                    <th>Assign To:</th>
+                                                    <td>
+                                                        <select name="AssignTo" class="form-control" required>
+                                                            <option value="">Select Team</option>
+                                                            {% for i in team %}
+                                                            <option value="{{i.id}}">{{i.teamName}} [{{i.teamLeaderName}}]</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="submit" class="btn btn-primary">Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                {% if error == "no" %}
+                                <script>
+                                    alert('Assigned to Team successfully');
+                                    window.location=('{% url 'viewRequestDetails' firereport.id %}');
+                                </script>
+                                {% endif %}
+
+                                {% if error == "yes" %}
+                                <script>
+                                    alert('Something Went Wrong. Please try again');
+                                </script>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal fade" id="takeaction" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Take Action</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <table width="100%">
+                                                <tr>
+                                                    <th>Status :</th>
+                                                    <td>
+                                                        <select name="status" class="form-control" required>
+                                                        <option value="">Select Action</option>
+                                                            {% if firereport.Status == 'Assigned' %}
+                                                            <option value="Team On the Way">Team On the Way</option>
+                                                            <option value="Fire Relief Work in Progress">Fire Relief Work in Progress</option>
+                                                            <option value="Request Completed">Request Completed</option>
+
+                                                            {% elif firereport.Status == 'Team On the Way' %}
+                                                            <option value="Fire Relief Work in Progress">Fire Relief Work in Progress</option>
+                                                            <option value="Request Completed">Request Completed</option>
+
+                                                            {% elif firereport.Status == 'Fire Relief Work in Progress' %}
+                                                            <option value="Request Completed">Request Completed</option>
+                                                            {% endif %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Remark :</th>
+                                                    <td><textarea name="remark" class="form-control" maxlength="500" rows="5" required></textarea></td>
+                                                </tr>
+                                            </table>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="submit" class="btn btn-primary">Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                {% if error1 == "no" %}
+                                <script>
+                                    alert('Request has been updated');
+                                    window.location=('{% url 'allRequest' %}');
+                                </script>
+                                {% endif %}
+
+                                {% if error1 == "yes" %}
+                                <script>
+                                    alert('Something Went Wrong. Please try again');
+                                </script>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+{% endblock %}

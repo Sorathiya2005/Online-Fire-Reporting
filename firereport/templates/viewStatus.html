@@ -1,0 +1,64 @@
+{% include 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Status - Online Fire Report Management System</title>
+</head>
+<body>
+<img src="{% static 'images/fire.jpg' %}" style="width:100%; height:350px;">
+<br>
+<div class="container mt-5">
+    <form method="post">
+        {% csrf_token %}
+        <div class="card my-4" style="border : 2px ridge green">
+            <h5 class="card-header text-info">Search Report by Name/Mobile No./Location</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <input type="text" name="searchdata" class="form-control"
+                           placeholder="Enter Name/Mobile No/Location"
+                           required>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search" style="height: 25px"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if firereport %}
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Mobile Number</th>
+                <th>Location</th>
+                <th>Reporting Time</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for i in firereport %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.FullName}}</td>
+                <td>{{i.MobileNumber}}</td>
+                <td>{{i.Location}}</td>
+                <td>{{i.Postingdate}}</td>
+                <td><a class="btn btn-primary" href="{% url 'viewStatusDetails' i.id %}"><i class="fa fa-eye"></i></a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
+
+{% include 'footer.html' %}
